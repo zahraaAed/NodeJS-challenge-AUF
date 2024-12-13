@@ -85,6 +85,9 @@ function quit(){
   process.exit();
 }
 
+// This function is executed when the user types "help"
+
+
 function help(){
   console.log ('How we can help you ?')
 }
