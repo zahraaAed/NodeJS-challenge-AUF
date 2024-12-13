@@ -34,15 +34,25 @@ function startApp(name){
  * @returns {void}
  */
 
-  function onDataReceived(text) {
+
+function onDataReceived(text) {
+  const remove_space = text.trim(); // Removes unnecessary spaces and newline characters from the input
+  const words = remove_space.split(" "); // Splits the cleaned input into an array of words
+  const command = words[0]; // The first word in the array is treated as the command, in our case it's hello
+  const argument = words.slice(1).join(" "); // Combines all words after the command into a single string (the argument)
+
     if (text === 'quit\n' || text === 'exit\n') {
       quit();
     }
   
   
-  else if(text === 'hello\n'){
-    hello();
-  }
+    else if (command === 'hello') {
+      if (argument) {
+        console.log(`hello ${argument}!`); // Respond with the argument
+      } else {
+        console.log("hello!"); // Default response if no argument was provided
+      }
+    }
 
   else if(text =='help\n'){
     help();
