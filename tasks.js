@@ -34,6 +34,9 @@ function startApp(name){
  * @returns {void}
  */
 
+//list command for tasks
+let tasks=["solve nodejs excercise", "learn more about js", "help your friends"]
+
 
 function onDataReceived(text) {
   const remove_space = text.trim(); // Removes unnecessary spaces and newline characters from the input
@@ -41,7 +44,7 @@ function onDataReceived(text) {
   const command = words[0]; // The first word in the array is treated as the command, in our case it's hello
   const argument = words.slice(1).join(" "); // Combines all words after the command into a single string (the argument)
 
-    if (text === 'quit\n' || text === 'exit\n') {
+    if (command === 'quit\n' || command === 'exit\n') {
       quit();
     }
   
@@ -54,17 +57,27 @@ function onDataReceived(text) {
       }
     }
 
-  else if(text =='help\n'){
+  else if(command =='help\n'){
     help();
   }
   else{
-    unknownCommand(text);
+    unknownCommand(command);
   }
+
+  //listing tasks
+
+  if (command === 'list') {
+    if (tasks.length === 0) { //check if the list task is empty
+      console.log("No tasks available."); 
+    } else {
+      tasks.forEach((task, index) => {
+        console.log(`${index + 1}. ${task}`); // Display task number and description ,output of first task will be 1. task name
+      });
+    }
 }
 
 
-//list command for tasks
-let tasks=["solve nodejs excercise", "learn more about js", "help your friends"]
+
 
 /**
  * prints "unknown command"
