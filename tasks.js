@@ -63,6 +63,9 @@ function onDataReceived(text) {
 }
 
 
+//list command for tasks
+let tasks=["solve nodejs excercise", "learn more about js", "help your friends"]
+
 /**
  * prints "unknown command"
  * This function is supposed to run when all other commands have failed
