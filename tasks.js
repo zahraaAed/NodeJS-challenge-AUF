@@ -47,7 +47,28 @@ function onDataReceived(text) {
     if (command === 'quit\n' || command === 'exit\n') {
       quit();
     }
-  
+  //listing tasks
+
+  else if (command === 'list') {
+    if (tasks.length === 0) { //check if the list task is empty
+      console.log("No tasks available."); 
+    } else {
+      tasks.forEach((task, index) => {
+        console.log(`${index + 1}. ${task}`); // Display task number and description ,output of first task will be 1. task name
+      });
+    }
+
+    
+}
+    // Adding a task
+    else if (command === 'add') {
+      if (argument) {
+        tasks.push(argument); // Add the task to the list
+        console.log(`Task added: ${argument}`); // Confirm the task was added
+      } else {
+        console.log("Error: No task provided. Use 'add [task]' to add a task."); // Handle missing argument
+      }
+    }
   
     else if (command === 'hello') {
       if (argument) {
@@ -64,16 +85,6 @@ function onDataReceived(text) {
     unknownCommand(command);
   }
 
-  //listing tasks
-
-  if (command === 'list') {
-    if (tasks.length === 0) { //check if the list task is empty
-      console.log("No tasks available."); 
-    } else {
-      tasks.forEach((task, index) => {
-        console.log(`${index + 1}. ${task}`); // Display task number and description ,output of first task will be 1. task name
-      });
-    }
 }
 
 
@@ -120,3 +131,4 @@ function help(){
 
 // The following line starts the application
 startApp("zahraa alaaeddine")
+
