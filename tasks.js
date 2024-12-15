@@ -72,7 +72,7 @@ function onDataReceived(text) {
 
 
     //remove element 
- 
+ /*
   else if (command === 'remove') {
     if (tasks.length > 0) {
       const removedTask = tasks.pop(); // Remove the last task
@@ -96,7 +96,42 @@ function onDataReceived(text) {
     } else {
       console.log('Not enough tasks to remove the second one.');
     }
+    
+  }*/
+  
+
+
+
+  /* another way for step 4 and 1 in step 5*/
+  
+  else if (command.startsWith('remove')) {
+    // Check if there's a number after 'remove'
+    const number = command.slice(6); // Extract the part after 'remove'
+    
+    if (number === '') {
+      // If no number is provided, default to removing the last task
+      if (tasks.length > 0) {
+        const removedTask = tasks.pop(); // Remove the last task
+        console.log(`Removed task: ${removedTask}\nUpdated tasks:\n${tasks.join("\n")}`);
+      } else {
+        console.log('Task list is empty.');
+      }
+    } else {
+      // Convert the number to an index (1-based to 0-based)
+      const index = parseInt(number) - 1;
+  
+      // Check if the index is valid
+      if (isNaN(index) || index < 0 || index >= tasks.length) {
+        console.log('Error: Invalid task number. Please provide a valid number.');
+      } else {
+        // Remove the specified task
+        const removedTask = tasks.splice(index, 1)[0];
+        console.log(`Removed task: ${removedTask}\nUpdated tasks:\n${tasks.join("\n")}`);
+      }
+    }
   }
+  
+
   
     else if (command === 'hello') {
       if (argument) {
