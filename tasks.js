@@ -66,9 +66,37 @@ function onDataReceived(text) {
         tasks.push(argument); // Add the task to the list
         console.log(`Task added: ${argument}`); // Confirm the task was added
       } else {
-        console.log("Error: No task provided. Use 'add [task]' to add a task."); // Handle missing argument
+        console.log("Error: No task provided."); // Handle errors in case of missing argument
       }
     }
+
+
+    //remove element 
+ 
+  else if (command === 'remove') {
+    if (tasks.length > 0) {
+      const removedTask = tasks.pop(); // Remove the last task
+      console.log (`Removed task: ${removedTask}\n Updated tasks: ${tasks}`);
+    } else {
+      console.log('Task list is empty.');
+    }
+  } 
+  else if (command === 'remove1') {
+    if (tasks.length > 0) {
+      const removedTask = tasks.shift(); // Remove the first task
+      console.log(`Removed task: ${removedTask}\n Updated tasks: ${tasks}`);
+    } else {
+      console.log('Task list is empty.');
+    }
+  } 
+  else if (command === 'remove2') {
+    if (tasks.length > 1) {
+      const removedTask = tasks.splice(1, 1)[0]; // Remove the second task
+      console.log(`Removed task: ${removedTask}\n Updated tasks: ${tasks}`);
+    } else {
+      console.log('Not enough tasks to remove the second one.');
+    }
+  }
   
     else if (command === 'hello') {
       if (argument) {
