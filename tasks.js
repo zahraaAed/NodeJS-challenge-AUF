@@ -35,7 +35,7 @@ function startApp(name){
  */
 
 //list command for tasks
-let tasks=["solve nodejs excercise", "learn more about js", "help your friends"]
+let tasks=[{text:"solve nodejs excercise" ,done:true}, {text:"learn more about js", done:false},{text: "help your friends", done:false}]
 
 
 function onDataReceived(text) {
@@ -50,16 +50,16 @@ function onDataReceived(text) {
   //listing tasks
 
   else if (command === 'list') {
-    if (tasks.length === 0) { //check if the list task is empty
-      console.log("No tasks available."); 
+    if (tasks.length === 0) { // Check if the task list is empty
+      console.log("No tasks available.");
     } else {
-      tasks.forEach((task, index) => {
-        console.log(`${index + 1}. ${task}`); // Display task number and description ,output of first task will be 1. task name
-      });
+      listTasks(); // we Called the listTasks function to display the tasks
     }
+  }
+  
 
-    
-}
+
+
     // Adding a task
     else if (command === 'add') {
       if (argument) {
@@ -203,6 +203,13 @@ function hello(){
   console.log('hello!')
 }
 
+//function for checked tasks
+function listTasks() {
+  tasks.forEach((task, index) => {
+    const status = task.done ? "[✓]" : "[ ]"; // Show ✓ for done, blank for not done
+    console.log(`${index + 1}. ${status} ${task.text}`);
+  });
+}
 
 /**
  * Exits the application
