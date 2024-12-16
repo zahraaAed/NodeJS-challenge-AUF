@@ -1,4 +1,6 @@
 
+const fs = require("fs"); // Import the file system module
+const fileToRead = process.argv[2] || "database.json"; //process.argv is an array in Node.js that contains the command-line arguments passed when you run the script. i give it 2 to take file user add .
 /**
  * Starts the application
  * This is the function that is run when the app starts
@@ -16,6 +18,26 @@ function startApp(name){
   console.log(`Welcome to ${name}'s application!`)
   console.log("--------------------")
 }
+
+let tasks=[{text:"solve nodejs excercise" ,done:true}, {text:"learn more about js", done:false},{text: "help your friends", done:false}]
+
+
+
+function loadTasks() {
+  try {
+    const fileContent = fs.readFileSync(fileToRead, "utf8"); // Read the file's content from the fileor default database.json and we use utf8  ensures the file's content is read as a proper string that humans can understand.
+
+    tasks = JSON.parse(fileContent); // JSON.parse() is a method used to convert a JSON string into a JavaScript object (or array).
+    console.log(`Tasks loaded from ${fileToRead}`);
+  } catch (error) {
+    // Handle cases where the file doesn't exist or has invalid content
+    console.error(`Could not load tasks from ${fileToRead}. Starting with an empty task list.`);
+    tasks = []; // Default to an empty array
+  }
+}
+
+// Call the function to load tasks before starting the app
+loadTasks();
 
 
 /**
@@ -35,7 +57,7 @@ function startApp(name){
  */
 
 //list command for tasks
-let tasks=[{text:"solve nodejs excercise" ,done:true}, {text:"learn more about js", done:false},{text: "help your friends", done:false}]
+
 
 
 function onDataReceived(text) {
@@ -104,7 +126,7 @@ function onDataReceived(text) {
 
   /* another way for step 4 and 1 in step 5*/
 
-  else if (command.startsWith('remove')) {
+  else if (command==='remove') {
     // Check if there's a number after 'remove'
     const number = command.slice(6); // Extract the part after 'remove'
     
@@ -200,6 +222,14 @@ else if (command === 'uncheck') {
       }
     }
 
+
+
+    //quit 
+    else if (command === 'quit' || command==="exit") {
+      quit();
+    }
+
+
   else if(command =='help\n'){
     help();
   }
@@ -246,10 +276,20 @@ function listTasks() {
  *
  * @returns {void}
  */
-function quit(){
-  console.log('Quitting now, goodbye!')
-  process.exit();
+function quit() {
+  const json = JSON.stringify(tasks, null, 2); // Convert tasks to a JSON string  that can be saved to a file.
+  const fileName = fileToRead ?? "database.json"; // Use fileToRead or if it's not defined it will be saved by default to "database.json"
+
+  fs.writeFile(fileName, json, (err) => {
+    if (err) {
+      console.error("Error saving tasks:", err);
+    } else {
+      console.log(`Tasks saved to ${fileName}. Quitting now, goodbye!`);
+      process.exit();
+    }
+  });
 }
+
 
 // This function is executed when the user types "help"
 
