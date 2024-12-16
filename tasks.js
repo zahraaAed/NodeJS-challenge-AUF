@@ -161,7 +161,37 @@ else if (command === 'edit') {
   }
 }
 
-  
+//check command
+else if (command === 'check') {
+  if (!argument) {
+    console.log("Error: Please specify a task number to check.");
+  } else {
+    const taskIndex = parseInt(argument) - 1; // Convert argument to a number and adjust for 0-based index
+    if (isNaN(taskIndex) || taskIndex < 0 || taskIndex >= tasks.length) {
+      console.log("Error: Invalid task number.");
+    } else {
+      tasks[taskIndex].done = true; // Mark the task as done
+      console.log(`Task ${taskIndex + 1} marked as done.`);
+    }
+  }
+}
+
+//uncheck command
+else if (command === 'uncheck') {
+  if (!argument) {
+    console.log("Error: Please specify a task number to uncheck.");
+  } else {
+    const taskIndex = parseInt(argument) - 1; // Convert argument to a number and adjust for 0-based index
+    if (isNaN(taskIndex) || taskIndex < 0 || taskIndex >= tasks.length) {
+      console.log("Error: Invalid task number.");
+    } else {
+      tasks[taskIndex].done = false; // Mark the task as false
+      console.log(`Task ${taskIndex + 1} marked as not achieved.`);
+    }
+  }
+}
+
+//hello command
     else if (command === 'hello') {
       if (argument) {
         console.log(`hello ${argument}!`); // respond with the argument
