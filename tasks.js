@@ -103,7 +103,7 @@ function onDataReceived(text) {
 
 
   /* another way for step 4 and 1 in step 5*/
-  
+
   else if (command.startsWith('remove')) {
     // Check if there's a number after 'remove'
     const number = command.slice(6); // Extract the part after 'remove'
@@ -117,7 +117,7 @@ function onDataReceived(text) {
         console.log('Task list is empty.');
       }
     } else {
-      // Convert the number to an index (1-based to 0-based)
+      // Convert the number to an index (1-based to 0-based) in case number provided is 3 then index is 2
       const index = parseInt(number) - 1;
   
       // Check if the index is valid
@@ -132,12 +132,41 @@ function onDataReceived(text) {
   }
   
 
+//edit task
+else if (command === 'edit') {
+  if (!argument) {
+    // Case 1: No argument provided
+    console.log("Error: Nothing to edit.");
+  } else {
+    const args = argument.split(" "); // Split the argument into parts
+    if (args.length === 1) {
+      // Case 2: Only new text is provided, replace the last task
+      if (tasks.length > 0) {
+        tasks.splice(tasks.length - 1, 1, argument); // Replace the last task
+        console.log(`Edited last task to: ${argument}`);
+      } else {
+        console.log("Error: No tasks available to edit.");
+      }
+    } else {
+      // Case 3: A task number and new text are provided
+      const taskIndex = parseInt(args[0]) - 1; // Parse the task number
+      const newText = argument.substring(args[0].length + 1); // Extract the new text
+      if (isNaN(taskIndex) || taskIndex < 0 || taskIndex >= tasks.length) {
+        console.log("Error: Invalid task number.");
+      } else {
+        tasks.splice(taskIndex, 1, newText); // Replace the specified task
+        console.log(`Task ${taskIndex + 1} edited to: ${newText}`);
+      }
+    }
+  }
+}
+
   
     else if (command === 'hello') {
       if (argument) {
-        console.log(`hello ${argument}!`); // Respond with the argument
+        console.log(`hello ${argument}!`); // respond with the argument
       } else {
-        console.log("hello!"); // Default response if no argument was provided
+        console.log("hello!"); // Default resonse if no argument was provided
       }
     }
 
