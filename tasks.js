@@ -39,7 +39,13 @@ function loadTasks() {
 // Call the function to load tasks before starting the app
 loadTasks();
 
-
+//save tasks
+function saveTasks() {
+  const json = JSON.stringify(tasks, null, 2); // Convert tasks array to a JSON string
+  fs.writeFileSync(fileToRead, json); // Save the JSON string to the specified file
+  console.log(`Tasks saved to ${fileToRead}`);
+}
+saveTasks()
 /**
  * Decides what to do depending on the data that was received
  * This function receives the input sent by the user.
